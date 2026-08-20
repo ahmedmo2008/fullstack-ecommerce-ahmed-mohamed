@@ -1,0 +1,14 @@
+ShopSphere (Aterra) — Cloud Service Classification
+Student ID: EYOUTH-30811200108992
+
+1. Frontend Hosting (Vercel — aterra-frontend.vercel.app)
+Classification: PaaS (Platform as a Service)
+Reason: Vercel builds and serves the React app from source; the student never provisions or manages a server, OS, or web server config — only application code is supplied.
+
+2. Backend Hosting (Vercel Serverless Functions — aterra-backend.vercel.app)
+Classification: PaaS (Platform as a Service)
+Reason: The Express app runs as a managed serverless function; Vercel handles the runtime, scaling, and infrastructure, and the student only deploys application code (api/index.js).
+
+3. Database (Supabase PostgreSQL)
+Classification: PaaS (Platform as a Service) — specifically Database as a Service (DBaaS)
+Reason: Supabase provisions, patches, and manages the PostgreSQL engine and connection pooling; the student only defines the schema and queries through Prisma, with no OS or database-server administration.

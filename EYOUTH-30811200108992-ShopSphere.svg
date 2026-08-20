@@ -1,0 +1,75 @@
+<svg viewBox="0 0 1100 620" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#3d2b3f"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1100" height="620" fill="#fbf8f3"/>
+
+  <text x="550" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#2e1f30">ShopSphere (Aterra) — Production Architecture</text>
+  <text x="550" y="62" text-anchor="middle" font-size="13" fill="#6b5b6e">Student ID: EYOUTH-30811200108992</text>
+
+  <!-- Client -->
+  <rect x="60" y="260" width="160" height="90" rx="10" fill="#ffffff" stroke="#3d2b3f" stroke-width="2"/>
+  <text x="140" y="300" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e1f30">Client Browser</text>
+  <text x="140" y="320" text-anchor="middle" font-size="12" fill="#6b5b6e">End user</text>
+
+  <!-- Frontend -->
+  <rect x="330" y="140" width="220" height="110" rx="10" fill="#f2e9d8" stroke="#a8791a" stroke-width="2"/>
+  <text x="440" y="170" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e1f30">Frontend</text>
+  <text x="440" y="192" text-anchor="middle" font-size="12" fill="#4a3b4c">React 18 + Vite (Tailwind)</text>
+  <text x="440" y="210" text-anchor="middle" font-size="12" fill="#4a3b4c">Vercel Static Hosting</text>
+  <text x="440" y="228" text-anchor="middle" font-size="11" fill="#7a6a3c">aterra-frontend.vercel.app</text>
+
+  <!-- Backend -->
+  <rect x="330" y="380" width="220" height="120" rx="10" fill="#e9dde8" stroke="#6b3e6d" stroke-width="2"/>
+  <text x="440" y="410" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e1f30">Backend API</text>
+  <text x="440" y="432" text-anchor="middle" font-size="12" fill="#4a3b4c">Node.js / Express</text>
+  <text x="440" y="450" text-anchor="middle" font-size="12" fill="#4a3b4c">Vercel Serverless (api/index.js)</text>
+  <text x="440" y="468" text-anchor="middle" font-size="11" fill="#6b3e6d">aterra-backend.vercel.app</text>
+  <text x="440" y="486" text-anchor="middle" font-size="10" fill="#6b3e6d">Helmet · rate-limit · CORS(FRONTEND_URL)</text>
+
+  <!-- Postgres -->
+  <rect x="700" y="280" width="220" height="100" rx="10" fill="#dceee4" stroke="#2f6d4d" stroke-width="2"/>
+  <text x="810" y="310" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e1f30">Supabase PostgreSQL</text>
+  <text x="810" y="332" text-anchor="middle" font-size="12" fill="#2f6d4d">Prisma ORM</text>
+  <text x="810" y="350" text-anchor="middle" font-size="11" fill="#2f6d4d">Pooled :6543 (DATABASE_URL)</text>
+  <text x="810" y="366" text-anchor="middle" font-size="11" fill="#2f6d4d">Session pooler :5432 (DIRECT_URL)</text>
+
+  <!-- MongoDB -->
+  <rect x="700" y="420" width="220" height="100" rx="10" fill="#dbe7ee" stroke="#245a73" stroke-width="2"/>
+  <text x="810" y="450" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e1f30">MongoDB Atlas</text>
+  <text x="810" y="472" text-anchor="middle" font-size="12" fill="#245a73">Mongoose ODM</text>
+  <text x="810" y="490" text-anchor="middle" font-size="11" fill="#245a73">Reviews + Activity Logs</text>
+  <text x="810" y="506" text-anchor="middle" font-size="11" fill="#245a73">M0 free cluster</text>
+
+  <!-- Monitoring -->
+  <rect x="330" y="540" width="220" height="55" rx="10" fill="#fbe9e2" stroke="#a1462a" stroke-width="2"/>
+  <text x="440" y="562" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e1f30">UptimeRobot</text>
+  <text x="440" y="580" text-anchor="middle" font-size="11" fill="#a1462a">Polls GET /api/health</text>
+
+  <!-- Arrows -->
+  <line x1="220" y1="295" x2="330" y2="215" stroke="#3d2b3f" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="255" y="240" font-size="11" fill="#4a3b4c">HTTPS</text>
+
+  <line x1="220" y1="325" x2="330" y2="430" stroke="#3d2b3f" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="240" y="400" font-size="11" fill="#4a3b4c">HTTPS (API calls)</text>
+
+  <line x1="440" y1="250" x2="440" y2="380" stroke="#3d2b3f" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="452" y="315" font-size="10" fill="#7a6a3c">served by</text>
+
+  <line x1="550" y1="420" x2="700" y2="340" stroke="#3d2b3f" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="580" y="370" font-size="11" fill="#4a3b4c">Prisma / SSL</text>
+
+  <line x1="550" y1="460" x2="700" y2="470" stroke="#3d2b3f" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="580" y="450" font-size="11" fill="#4a3b4c">Mongoose / SRV</text>
+
+  <line x1="440" y1="500" x2="440" y2="540" stroke="#3d2b3f" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Legend -->
+  <rect x="60" y="540" width="14" height="14" fill="#f2e9d8" stroke="#a8791a"/>
+  <text x="80" y="551" font-size="11" fill="#4a3b4c">Vercel (compute/hosting)</text>
+  <rect x="60" y="565" width="14" height="14" fill="#dceee4" stroke="#2f6d4d"/>
+  <text x="80" y="576" font-size="11" fill="#4a3b4c">Managed database (PaaS)</text>
+</svg>

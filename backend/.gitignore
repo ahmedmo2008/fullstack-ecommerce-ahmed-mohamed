@@ -4,3 +4,5 @@ uploads/*
 !uploads/.gitkeep
 coverage
 *.log
+.vercel
+.env*

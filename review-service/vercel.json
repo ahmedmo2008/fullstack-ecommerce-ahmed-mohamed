@@ -4,17 +4,9 @@
     {
       "src": "api/index.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "api/send-welcome-email.js",
-      "use": "@vercel/node"
     }
   ],
   "routes": [
-    {
-      "src": "/api/internal/send-welcome-email",
-      "dest": "api/send-welcome-email.js"
-    },
     {
       "src": "/(.*)",
       "dest": "api/index.js"

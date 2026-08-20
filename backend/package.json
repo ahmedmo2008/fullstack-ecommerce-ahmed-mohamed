@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
+    "axios": "^1.19.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -43,7 +44,9 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js"
+    ],
     "testTimeout": 20000
   }
 }

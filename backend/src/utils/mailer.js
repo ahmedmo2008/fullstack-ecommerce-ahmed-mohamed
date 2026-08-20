@@ -1,34 +1,24 @@
-const nodemailer = require('nodemailer');
-
-function createTransport() {
-  return nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT) || 587,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  });
-}
+const axios = require('axios');
 
 async function sendWelcomeEmail(to, name) {
-  if (!process.env.SMTP_HOST) {
-    console.log(`SMTP not configured, skipping welcome email to ${to}`);
+  const baseUrl = process.env.SELF_BASE_URL;
+
+  if (!baseUrl) {
+    console.log('SELF_BASE_URL not configured, skipping welcome email trigger');
     return;
   }
 
   try {
-    const transporter = createTransport();
-
-    await transporter.sendMail({
-      from: process.env.SMTP_FROM || 'no-reply@aterra.shop',
-      to,
-      subject: 'Welcome to Aterra',
-      html: `<p>Hi ${name},</p><p>Thanks for creating an account with Aterra. We're glad to have you.</p>`,
-    });
+    await axios.post(
+      `${baseUrl}/api/internal/send-welcome-email`,
+      { to, name },
+      {
+        headers: { 'x-internal-key': process.env.INTERNAL_FUNCTION_KEY },
+        timeout: 5000,
+      }
+    );
   } catch (err) {
-    console.error('Failed to send welcome email:', err.message);
+    console.error('Failed to trigger welcome email function:', err.message);
   }
 }
 

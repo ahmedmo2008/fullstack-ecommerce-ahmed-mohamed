@@ -1,28 +1,60 @@
 const express = require('express');
-const { body } = require('express-validator');
-const validate = require('../middleware/validate');
+const axios = require('axios');
 const { requireAuth } = require('../middleware/auth');
-const {
-  getProductReviews,
-  createReview,
-  deleteReview,
-} = require('../controllers/reviewController');
 
 const router = express.Router();
 
-router.get('/:productId', getProductReviews);
+const REVIEW_SERVICE_URL = process.env.REVIEW_SERVICE_URL;
 
-router.post(
-  '/:productId',
-  requireAuth,
-  [
-    body('rating').isInt({ min: 1, max: 5 }).withMessage('Rating must be between 1 and 5'),
-    body('comment').trim().notEmpty().withMessage('Comment is required'),
-  ],
-  validate,
-  createReview
-);
+function forwardAuthHeader(req) {
+  return req.headers.authorization
+    ? { Authorization: req.headers.authorization }
+    : {};
+}
 
-router.delete('/:id', requireAuth, deleteReview);
+router.get('/:productId', async (req, res, next) => {
+  try {
+    const response = await axios.get(
+      `${REVIEW_SERVICE_URL}/reviews/${req.params.productId}`
+    );
+    res.json(response.data);
+  } catch (err) {
+    if (err.response) {
+      return res.status(err.response.status).json(err.response.data);
+    }
+    next(err);
+  }
+});
+
+router.post('/:productId', requireAuth, async (req, res, next) => {
+  try {
+    const response = await axios.post(
+      `${REVIEW_SERVICE_URL}/reviews/${req.params.productId}`,
+      req.body,
+      { headers: forwardAuthHeader(req) }
+    );
+    res.status(response.status).json(response.data);
+  } catch (err) {
+    if (err.response) {
+      return res.status(err.response.status).json(err.response.data);
+    }
+    next(err);
+  }
+});
+
+router.delete('/:id', requireAuth, async (req, res, next) => {
+  try {
+    const response = await axios.delete(
+      `${REVIEW_SERVICE_URL}/reviews/${req.params.id}`,
+      { headers: forwardAuthHeader(req) }
+    );
+    res.status(response.status).json(response.data);
+  } catch (err) {
+    if (err.response) {
+      return res.status(err.response.status).json(err.response.data);
+    }
+    next(err);
+  }
+});
 
 module.exports = router;

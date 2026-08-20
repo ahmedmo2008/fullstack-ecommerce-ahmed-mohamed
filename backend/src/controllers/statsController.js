@@ -1,10 +1,10 @@
+const axios = require('axios');
 const prisma = require('../config/prisma');
 const ActivityLog = require('../models/ActivityLog');
-const Review = require('../models/Review');
 
 async function getStoreStats(req, res, next) {
   try {
-    const [userCount, productCount, orderCount, revenueResult, topProducts, recentActivity, reviewCount] =
+    const [userCount, productCount, orderCount, revenueResult, topProducts, recentActivity, reviewCountResult] =
       await Promise.all([
         prisma.user.count({ where: { role: 'CUSTOMER' } }),
         prisma.product.count(),
@@ -20,7 +20,10 @@ async function getStoreStats(req, res, next) {
           take: 5,
         }),
         ActivityLog.find().sort({ createdAt: -1 }).limit(10),
-        Review.countDocuments(),
+        axios
+          .get(`${process.env.REVIEW_SERVICE_URL}/stats/reviews-count`)
+          .then((r) => r.data.count)
+          .catch(() => 0),
       ]);
 
     const topProductIds = topProducts.map((p) => p.productId);
@@ -42,7 +45,7 @@ async function getStoreStats(req, res, next) {
       totalProducts: productCount,
       totalOrders: orderCount,
       totalRevenue: Number(revenueResult._sum.totalAmount || 0),
-      totalReviews: reviewCount,
+      totalReviews: reviewCountResult,
       topProducts: topProductsWithNames,
       recentActivity,
     });

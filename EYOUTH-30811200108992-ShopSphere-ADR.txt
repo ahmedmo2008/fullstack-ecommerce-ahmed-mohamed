@@ -1,0 +1,32 @@
+Architecture Decision Record — ShopSphere (Aterra)
+Student ID: EYOUTH-30811200108992
+
+1. Service Extracted: Reviews
+
+The product reviews functionality was extracted from the monolithic backend into an
+independent review-service, with its own codebase, own Express app, own MongoDB
+connection, and its own Vercel deployment. The main backend no longer contains any
+review logic; it now calls the review-service over REST and forwards the response.
+
+Reason: Reviews are a bounded, self-contained domain — they read and write only their
+own MongoDB collection, have no relational dependency on Postgres, and are consumed
+independently from the rest of the storefront (product, cart, and order flows never
+need to join against review data). This makes reviews a low-risk, high-clarity
+candidate for extraction: pulling it out simplifies the core backend without touching
+checkout, auth, or product logic, and lets the review workload scale or fail
+independently of the main store.
+
+2. Workload Moved to Serverless: Welcome Email Delivery
+
+Sending the welcome email after user registration was moved out of the main
+application into a standalone Vercel serverless function
+(api/send-welcome-email.js). The registration endpoint now triggers this function
+over HTTP instead of calling the mail transport directly.
+
+Reason: Sending a welcome email is a short-lived, stateless, fire-and-forget task
+that runs once per registration and has no bearing on whether the registration
+request itself succeeds. Running it as a serverless function means the main
+application no longer pays the latency or failure risk of an SMTP call inside the
+request/response cycle for account creation, and the function only consumes compute
+when a user actually registers — a good fit for serverless's pay-per-invocation,
+event-triggered model.

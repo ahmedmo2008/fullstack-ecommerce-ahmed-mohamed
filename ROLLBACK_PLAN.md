@@ -28,3 +28,6 @@ Same steps at https://vercel.com/ahmed-70a6/aterra-frontend/deployments
 ## Post-rollback
 - Confirm health via smoke test on both frontend and backend URLs
 - Open an issue documenting root cause before re-attempting the fix
+
+## Where logs are read in production
+Request and error logs are viewed in the **Vercel dashboard → project → Logs tab** (structured JSON via winston, stdout captured automatically by Vercel's runtime logging).

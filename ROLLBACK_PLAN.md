@@ -1,7 +1,11 @@
 # Rollback Plan
 
 ## Trigger conditions
-Roll back when a production deploy causes: 5xx error rate spike, failed health checks, broken auth/checkout flow, or a failing CI run that was force-merged.
+Roll back when a production deploy causes any of:
+- **UptimeRobot alert** — the monitor polling `GET /api/health` reports the backend down or returns a non-200 status; alert arrives via UptimeRobot's configured notification channel
+- 5xx error rate spike visible in Vercel's Logs tab
+- Broken auth/checkout flow reported or observed in smoke test
+- A failing CI run that was force-merged despite branch protection
 
 ## Backend (Vercel)
 1. Go to https://vercel.com/ahmed-70a6/aterra-backend/deployments

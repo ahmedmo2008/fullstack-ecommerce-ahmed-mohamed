@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const morgan = require('morgan');
+const requestLogger = require('./middleware/requestLogger');
 const path = require('path');
 
 const authRoutes = require('./routes/authRoutes');
@@ -64,7 +64,7 @@ app.use('/api/auth/register', authLimiter);
 
 app.use(express.json());
 if (process.env.NODE_ENV !== 'test') {
-  app.use(morgan('dev'));
+  app.use(requestLogger);
 }
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
